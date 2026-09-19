@@ -1,0 +1,170 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Contacts API",
+    "description": "API for managing contacts",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/contacts",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "Retrieve all contacts from the database.",
+        "responses": {
+          "200": {
+            "description": "Contacts retrieved successfully."
+          },
+          "500": {
+            "description": "Failed to retrieve contacts."
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new contact.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Contact information for the new contact.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Mary"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Johnson"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "mary@example.com"
+                },
+                "favoriteColor": {
+                  "type": "string",
+                  "example": "Purple"
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "2000-08-15"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Contact created successfully."
+          },
+          "400": {
+            "description": "All contact fields are required."
+          },
+          "500": {
+            "description": "Failed to create contact."
+          }
+        }
+      }
+    },
+    "/contact": {
+      "get": {
+        "description": "Retrieve a single contact by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "The MongoDB ID of the contact to retrieve.",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact retrieved successfully."
+          },
+          "500": {
+            "description": "Failed to retrieve contact."
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "put": {
+        "description": "Update an existing contact by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The MongoDB ID of the contact to update."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Updated contact information.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string",
+                  "example": "Mary"
+                },
+                "lastName": {
+                  "type": "string",
+                  "example": "Johnson"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "mary.updated@example.com"
+                },
+                "favoriteColor": {
+                  "type": "string",
+                  "example": "Blue"
+                },
+                "birthday": {
+                  "type": "string",
+                  "example": "2000-08-15"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact updated successfully."
+          },
+          "500": {
+            "description": "Failed to update contact."
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete a contact by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The MongoDB ID of the contact to delete."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Contact deleted successfully."
+          },
+          "500": {
+            "description": "Failed to delete contact."
+          }
+        }
+      }
+    }
+  }
+}

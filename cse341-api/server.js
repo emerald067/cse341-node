@@ -7,6 +7,8 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const { MongoClient } = require("mongodb");
 const contactsRouter = require("./routes/contacts");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 
 dotenv.config();
@@ -15,10 +17,12 @@ const app = express();
 const PORT = 8080;
 
 app.use(cors());
+app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/contacts", contactsRouter);
 
-const client = new MongoClient(process.env.MONGODB_URI);
 
+const client = new MongoClient(process.env.MONGODB_URI);
 async function connectToDatabase() {
     try {
         await client.connect();

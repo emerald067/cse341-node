@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 const contactsRouter = require("./routes/contacts");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
@@ -22,21 +23,13 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/contacts", contactsRouter);
 
 
-const client = new MongoClient(process.env.MONGODB_URI);
-async function connectToDatabase() {
-    try {
-        await client.connect();
-
-        const db = client.db("cse341");
-        app.locals.db = db;
-
-        console.log("Connected to MongoDB Atlas");
-    } catch (error) {
+mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log("Connected to MongoDB Atlas with Mongoose");
+    })
+    .catch((error) => {
         console.error("MongoDB connection failed:", error);
-    }
-}
-
-connectToDatabase();
+    });
 
 app.get("/professional", (req, res) => {
     res.json({

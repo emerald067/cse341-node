@@ -20,7 +20,7 @@ Content-Type: application/json
 
 
 ### Update contact
-PUT http://localhost:8080/contacts/6aadb8c41fa75f0e737909c4
+PUT http://localhost:8080/contacts/6ab7bde9dd1019d6e9dbfeda
 Content-Type: application/json
 
 {
@@ -33,4 +33,38 @@ Content-Type: application/json
 
 
 ### Delete contact
-DELETE http://localhost:8080/contacts/6aadb8c41fa75f0e737909c4
+DELETE http://localhost:8080/contacts/6ab7bde9dd1019d6e9dbfeda
+
+
+### Test Mongoose validation
+POST http://localhost:8080/contacts
+Content-Type: application/json
+
+{
+  "firstName": "Validation",
+  "lastName": "Test",
+  "email": "validation@example.com",
+  "favoriteColor": "Blue"
+}
+
+### Get nonexistent contact
+GET http://localhost:8080/contacts/contact?id=000000000000000000000000
+
+
+### Update nonexistent contact
+PUT http://localhost:8080/contacts/000000000000000000000000
+Content-Type: application/json
+
+{
+  "firstName": "Test",
+  "lastName": "Contact",
+  "email": "test@example.com",
+  "favoriteColor": "Blue",
+  "birthday": "2000-01-01"
+}
+
+
+### Delete nonexistent contact
+DELETE http://localhost:8080/contacts/000000000000000000000000
+
+
